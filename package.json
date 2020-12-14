@@ -1,0 +1,25 @@
+{
+  "name": "example",
+  "version": "0.1.0",
+  "description": "项目实例代码",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "build": "node md.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ruizer/example.git"
+  },
+  "author": "ruizer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ruizer/example/issues"
+  },
+  "homepage": "https://github.com/ruizer/example#readme",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
+  }
+}
