@@ -25,3 +25,24 @@ C.toRad = function (angle) {
 C.toAngle = function (rad) {
   return (rad * 180) / Math.PI;
 };
+
+/** 三角函数 */
+C.sin = function (angle) {
+  return Math.sin(C.toRad(angle));
+};
+C.cos = function (angle) {
+  return Math.cos(C.toRad(angle));
+};
+C.tan = function (angle) {
+  return Math.tan(C.toRad(angle));
+};
+/** 反三角函数 */
+C.arcsin = function (a, c) {
+  return C.toAngle(Math.asin(a / c));
+};
+C.arccos = function (a, c) {
+  return C.toAngle(Math.acos(a / c));
+};
+C.arctan = function (a, c) {
+  return C.toAngle(Math.atan(a / c));
+};

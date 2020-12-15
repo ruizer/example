@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>canvas坐标系</title>
+    <style>
+      #canvas {
+        box-shadow: 4px 4px 12px #888888;
+      }
+    </style>
+  </head>
+
+  <body>
+    <canvas id="canvas"></canvas>
+    <script src="/public/js/favicon.js"></script>
+    <script src="/public/js/github.js"></script>
+    <script src="../libs/base.js"></script>
+    <script>
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+
+      let W = (canvas.width = 600);
+      let H = (canvas.height = 400);
+
+      let mouse = C.getOffset(canvas);
+
+      drawSystem();
+
+      canvas.onmousemove = function () {
+        ctx.clearRect(0, 0, W, H);
+
+        let dx = mouse.x - W / 2;
+        let dy = mouse.y - H / 2;
+
+        // let angle = (Math.atan(dy / dx) * 180) / Math.PI;
+        let angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+        drawSystem();
+        ctx.beginPath();
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.lineTo(W / 2, H / 2);
+        ctx.stroke();
+        ctx.fillText(angle, mouse.x, mouse.y);
+      };
+
+      function drawSystem() {
+        ctx.save();
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(0, H / 2);
+        ctx.lineTo(W, H / 2);
+        ctx.moveTo(W / 2, 0);
+        ctx.lineTo(W / 2, H);
+        ctx.stroke();
+        ctx.restore();
+      }
+    </script>
+  </body>
+</html>
