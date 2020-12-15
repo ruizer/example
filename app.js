@@ -8,12 +8,12 @@ const mdToHtml = require("./md");
 mdToHtml();
 
 // 指定启动服务器到哪个文件夹
-app.use(express.static("./"));
+app.use('/example', express.static("./"));
 
 // 启动服务器监听80端口
 const port = 3000;
 app.listen(port, () => {
   console.log("web server runnin at:");
-  console.log(`Local:   http://localhost:${port}`);
-  console.log(`Network: http://${getIPAdress.myHost}:${port}`);
+  console.log(`Local:   http://localhost:${port}/example`);
+  console.log(`Network: http://${getIPAdress.myHost}:${port}/example`);
 });

@@ -5,7 +5,7 @@ const GithubIcon = {};
 const GITHUB_URL = "https://github.com/ruizer/example";
 
 // 获取当前 URL 的路径部分
-GithubIcon.pathname = pathname;
+GithubIcon.pathname = pathname.replace("/example", "");
 // 插入github图标
 GithubIcon.render = function () {
   const github =

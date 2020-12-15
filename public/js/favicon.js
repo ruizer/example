@@ -11,4 +11,4 @@ const ChangeFavicon = (link) => {
     document.head.appendChild($favicon);
   }
 };
-ChangeFavicon("/public/images/favicon.png");
+ChangeFavicon("/example/public/images/favicon.png");
