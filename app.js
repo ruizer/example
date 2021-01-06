@@ -11,8 +11,9 @@ mdToHtml();
 app.use('/example', express.static("./"));
 
 // 启动服务器监听80端口
-const port = 3000;
-app.listen(port, () => {
+// const port = 3000;
+const server = app.listen(0, () => {
+  const port = server.address().port
   console.log("web server runnin at:");
   console.log(`Local:   http://localhost:${port}/example`);
   console.log(`Network: http://${getIPAdress.myHost}:${port}/example`);
