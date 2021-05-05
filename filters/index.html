@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>图像处理</title>
+    <style>
+      .layout {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .layout button {
+        margin: 0 10px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="./img/莫言_7.jpg" style="width: 320px" />
+    <canvas id="imageCanvas"></canvas>
+    <div class="button-list">
+      <button data-action="brightness" data-args="0.5">亮度0.5</button>
+      <button data-action="brightness" data-args="1">亮度1</button>
+      <button data-action="contrast" data-args="1.5">对比度1.5</button>
+      <button data-action="contrast" data-args="0.5">对比度0.5</button>
+      <button data-action="blur" data-args="10">高斯模糊</button>
+      <button data-action="grayscale" data-args="0.5">灰度0.5</button>
+      <button data-action="grayaverage">灰度平均</button>
+      <button data-action="graycommon">一般灰度</button>
+      <button data-action="graydesat">灰度去饱和</button>
+      <button data-action="graymax">灰度最大</button>
+      <button data-action="graymin">灰度最小</button>
+      <button data-action="graysingle" data-args="red">灰度红色</button>
+      <button data-action="grayshadow" data-args="10">灰度阴影10</button>
+      <button data-action="invert" data-args="1">反色1</button>
+      <button data-action="opacity" data-args="0.1">透明度</button>
+      <button data-action="singlecolor" data-args="red">单色滤镜(红)</button>
+      <button data-action="saturate" data-args="2">饱和度</button>
+      <button data-action="sepia">棕褐色</button>
+      <button data-action="corrode">腐蚀</button>
+      <button data-action="dotted">喷点</button>
+      <button data-action="mosaic">马赛克</button>
+      <button data-action="mosaicP">马赛克mosaicP</button>
+      <button data-action="mosaicX">马赛克mosaicX</button>
+      <button data-action="sharp" data-args="2">锐化</button>
+      <button data-action="posterize">色调分离</button>
+      <button data-action="oilPainting">油画</button>
+      <button data-action="noise">杂色</button>
+      <button data-action="embossment">浮雕效果</button>
+      <button data-action="darkCorner">暗角</button>
+      <button data-action="gamma" data-args="5">伽马校正</button>
+      <button data-action="reduction">还原</button>
+    </div>
+    <script src="/example/public/js/favicon.js"></script>
+    <script src="/example/public/js/github.js"></script>
+    <script src="./js/filter.js"></script>
+    <script>
+      const w = 320,
+        h = 214;
+      const canvasEle = document.querySelector("#imageCanvas");
+      const ratio = window.devicePixelRatio || 1;
+      canvasEle.width = w * ratio; // 实际渲染像素
+      canvasEle.height = h * ratio; // 实际渲染像素
+      canvasEle.style.width = `${w}px`; // 控制显示大小
+      canvasEle.style.height = `${h}px`; // 控制显示大小
+      // canvasEle.getContext("2d").setTransform(ratio, 0, 0, ratio, 0, 0);
+
+      const context = canvasEle.getContext("2d");
+      let filter;
+      const img = new Image();
+      img.onload = function () {
+        filter = canvasDrawToFilter(
+          context,
+          img,
+          canvasEle.width,
+          canvasEle.height
+        );
+      };
+      img.src = "./img/莫言_7.jpg";
+
+      function canvasDrawToFilter(cxt, image, w, h) {
+        cxt.drawImage(image, 0, 0, w, h);
+        const imageData = cxt.getImageData(0, 0, w, h);
+        // cxt.putImageData(imageData, 0, 0);
+        return new Filter(imageData);
+      }
+
+      // 绑定点击事件
+      document.querySelector(".button-list").onclick = function (e) {
+        const target = e.target;
+        const dataset = target.dataset;
+        if (!(dataset && dataset.action)) {
+          // 不是目标元素
+          return;
+        }
+        const action = dataset.action; // 动作
+        const args = dataset.args; // 参数
+
+        if (filter[action] && action === "dotted") {
+          context.putImageData(filter[action](1, 1), 0, 0);
+        } else if (filter[action]) {
+          context.putImageData(filter[action](args), 0, 0);
+        }
+      };
+    </script>
+  </body>
+</html>

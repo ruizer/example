@@ -12,7 +12,7 @@ app.use('/example', express.static("./"));
 
 // 启动服务器监听80端口
 // const port = 3000;
-const server = app.listen(0, () => {
+const server = app.listen(9000, () => {
   const port = server.address().port
   console.log("web server runnin at:");
   console.log(`Local:   http://localhost:${port}/example`);
