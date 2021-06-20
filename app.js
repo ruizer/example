@@ -1,3 +1,4 @@
+const fs = require("fs");
 const getIPAdress = require("./libs/utils");
 // 引入express中间件
 const express = require("express");
@@ -6,6 +7,12 @@ const app = express();
 
 const mdToHtml = require("./md");
 mdToHtml();
+fs.watchFile('./README.md', (cur, pre) => {
+  if (cur.mtime !== pre.mtime) {
+    mdToHtml()
+    console.info('README文件已更改！')
+  }
+})
 
 // 指定启动服务器到哪个文件夹
 app.use('/example', express.static("./"));
